@@ -8,12 +8,13 @@ TMP       := $(ROOT)/.corretor-tmp
 
 T1_JAR    := $(ROOT)/T1/target/compilador.jar
 T2_JAR    := $(ROOT)/T2/target/compilador.jar
+T3_JAR    := $(ROOT)/T3/target/compilador.jar
 
-.PHONY: all build build-t1 build-t2 test test-t1 test-t2 clean
+.PHONY: all build build-t1 build-t2 build-t3 test test-t1 test-t2 test-t3 clean
 
 all: test
 
-build: build-t1 build-t2
+build: build-t1 build-t2 build-t3
 
 build-t1:
 	cd $(ROOT)/T1 && mvn -q clean package
@@ -21,7 +22,10 @@ build-t1:
 build-t2:
 	cd $(ROOT)/T2 && mvn -q clean package
 
-test: test-t1 test-t2
+build-t3:
+	cd $(ROOT)/T3 && mvn -q clean package
+
+test: test-t1 test-t2 test-t3
 
 test-t1: build-t1
 	@mkdir -p $(TMP)
@@ -31,7 +35,12 @@ test-t2: build-t2
 	@mkdir -p $(TMP)
 	java -jar "$(CORRETOR)" "java -jar $(T2_JAR)" $(GCC) "$(TMP)" "$(CASOS)" "$(RA)" t2
 
+test-t3: build-t3
+	@mkdir -p $(TMP)
+	java -jar "$(CORRETOR)" "java -jar $(T3_JAR)" $(GCC) "$(TMP)" "$(CASOS)" "$(RA)" t3
+
 clean:
 	cd $(ROOT)/T1 && mvn -q clean
 	cd $(ROOT)/T2 && mvn -q clean
+	cd $(ROOT)/T3 && mvn -q clean
 	rm -rf $(TMP)
