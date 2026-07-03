@@ -14,13 +14,15 @@ Compilador para a **Linguagem Algorítmica (LA)** desenvolvida pelo prof. Jander
 | **T2** | Análise sintática | Verifica a estrutura do programa via gramática ANTLR e aponta o primeiro erro sintático (ou léxico). | [T2/README.md](T2/README.md) |
 | **T3** | Análise semântica (parte 1) | Percorre a árvore com um visitor, checando tabela de símbolos e compatibilidade de tipos, reportando todos os erros semânticos. | [T3/README.md](T3/README.md) |
 | **T4** | Análise semântica (parte 2) | Estende o T3 com ponteiros, registros e sub-rotinas: redeclaração entre categorias, identificadores não declarados, compatibilidade de parâmetros em chamadas, atribuições com ponteiros/registros e uso indevido de `retorne`. | [T4/README.md](T4/README.md) |
+| **T5** | Geração de código | Combina as fases anteriores com um gerador que traduz o programa LA para código **C** equivalente (compilável com GCC). Sem erros, gera o código; com erros, reporta-os. | [T5/README.md](T5/README.md) |
 
-Cada pasta (`T1/`, `T2/`, `T3/`, `T4/`) é um projeto Maven independente, com seu próprio README de documentação externa (requisitos, como compilar e executar).
+Cada pasta (`T1/`, `T2/`, `T3/`, `T4/`, `T5/`) é um projeto Maven independente, com seu próprio README de documentação externa (requisitos, como compilar e executar).
 
 ## Requisitos
 
 - Java JDK 11+
 - Apache Maven 3.6+
+- GCC (apenas para compilar o código C gerado pelo T5)
 
 (O ANTLR 4.13.2 é baixado automaticamente pelo Maven na primeira compilação.)
 
@@ -29,12 +31,13 @@ Cada pasta (`T1/`, `T2/`, `T3/`, `T4/`) é um projeto Maven independente, com se
 Há um `Makefile` na raiz que compila cada trabalho e executa o corretor automático oficial:
 
 ```bash
-make build      # compila T1, T2, T3 e T4
-make test       # compila e corrige T1, T2, T3 e T4
+make build      # compila T1, T2, T3, T4 e T5
+make test       # compila e corrige T1, T2, T3, T4 e T5
 make test-t1    # apenas T1 
 make test-t2    # apenas T2 
 make test-t3    # apenas T3 
 make test-t4    # apenas T4 
+make test-t5    # apenas T5 
 make clean      # limpa os artefatos de build
 ```
 

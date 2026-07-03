@@ -10,12 +10,13 @@ T1_JAR    := $(ROOT)/T1/target/compilador.jar
 T2_JAR    := $(ROOT)/T2/target/compilador.jar
 T3_JAR    := $(ROOT)/T3/target/compilador.jar
 T4_JAR    := $(ROOT)/T4/target/compilador.jar
+T5_JAR    := $(ROOT)/T5/target/compilador.jar
 
-.PHONY: all build build-t1 build-t2 build-t3 build-t4 test test-t1 test-t2 test-t3 test-t4 clean
+.PHONY: all build build-t1 build-t2 build-t3 build-t4 build-t5 test test-t1 test-t2 test-t3 test-t4 test-t5 clean
 
 all: test
 
-build: build-t1 build-t2 build-t3 build-t4
+build: build-t1 build-t2 build-t3 build-t4 build-t5
 
 build-t1:
 	cd $(ROOT)/T1 && mvn -q clean package
@@ -29,7 +30,10 @@ build-t3:
 build-t4:
 	cd $(ROOT)/T4 && mvn -q clean package
 
-test: test-t1 test-t2 test-t3 test-t4
+build-t5:
+	cd $(ROOT)/T5 && mvn -q clean package
+
+test: test-t1 test-t2 test-t3 test-t4 test-t5
 
 test-t1: build-t1
 	@mkdir -p $(TMP)
@@ -47,9 +51,14 @@ test-t4: build-t4
 	@mkdir -p $(TMP)
 	java -jar "$(CORRETOR)" "java -jar $(T4_JAR)" $(GCC) "$(TMP)" "$(CASOS)" "$(RA)" t4
 
+test-t5: build-t5
+	@mkdir -p $(TMP)
+	java -jar "$(CORRETOR)" "java -jar $(T5_JAR)" $(GCC) "$(TMP)" "$(CASOS)" "$(RA)" t5
+
 clean:
 	cd $(ROOT)/T1 && mvn -q clean
 	cd $(ROOT)/T2 && mvn -q clean
 	cd $(ROOT)/T3 && mvn -q clean
 	cd $(ROOT)/T4 && mvn -q clean
+	cd $(ROOT)/T5 && mvn -q clean
 	rm -rf $(TMP)
